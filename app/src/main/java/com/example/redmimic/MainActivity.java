@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
     
         tvStatus = findViewById(R.id.tvStatus);
-        btnStart = findViewById(R.id.btnStart); // Убедись, что в XML id именно btnStart
+        btnStart = findViewById(R.id.btnToggle);
     
         bufferSize = AudioRecord.getMinBufferSize(SAMPLE_RATE, CHANNEL_CONFIG, AUDIO_FORMAT);
     
