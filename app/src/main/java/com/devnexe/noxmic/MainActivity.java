@@ -73,9 +73,9 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        if (tvIp != null) tvIp.setText("NOXMIC");
+        if (tvIp != null) tvIp.setText("NoxMic");
         
-        tvStatus.setText("READY TO CONNECT");
+        tvStatus.setText("");
 
         bufferSize = AudioRecord.getMinBufferSize(SAMPLE_RATE, CHANNEL_CONFIG, AUDIO_FORMAT);
 
@@ -85,7 +85,7 @@ public class MainActivity extends AppCompatActivity {
             } else {
                 stopRecording();
                 if (server != null) server.stop();
-                tvStatus.setText("READY TO CONNECT");
+                tvStatus.setText("");
             }
         });
 
@@ -133,7 +133,7 @@ public class MainActivity extends AppCompatActivity {
         WifiManager wifiManager = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
         int ipAddress = wifiManager.getConnectionInfo().getIpAddress();
         if (ipAddress == 0) {
-            tvStatus.setText("NO WI-FI CONNECTION");
+            tvStatus.setText("No WI-FI connection");
             return;
         }
         String ip = Formatter.formatIpAddress(ipAddress);
@@ -176,7 +176,7 @@ public class MainActivity extends AppCompatActivity {
     private void startRecording() {
         isRecording = true;
         runOnUiThread(() -> {
-            btnToggle.setText("STOP STREAMING");
+            btnToggle.setText("Stop streaming");
             btnToggle.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#A11D1D")));
         });
 
@@ -204,7 +204,7 @@ public class MainActivity extends AppCompatActivity {
     private void stopRecording() {
         isRecording = false;
         runOnUiThread(() -> {
-            btnToggle.setText("START STREAMING");
+            btnToggle.setText("Start streaming");
             btnToggle.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#0078D4")));
         });
 
