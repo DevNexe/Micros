@@ -26,9 +26,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.res.ResourcesCompat;
 
-// ИМПОРТЫ ДЛЯ NANOHTTPD 2.3.1
-import fi.iki.elonen.NanoHTTPD;
-import fi.iki.elonen.NanoHTTPD.Response.Status;
+import org.nanohttpd.protocols.http.IHTTPSession;
+import org.nanohttpd.protocols.http.NanoHTTPD;
+import org.nanohttpd.protocols.http.response.Response;
+import org.nanohttpd.protocols.http.response.Status;
 
 import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
@@ -48,7 +49,6 @@ public class MainActivity extends AppCompatActivity {
     private PipedOutputStream pipedOutputStream;
 
     private TextView tvStatus;
-<<<<<<< HEAD:app/src/main/java/com/devnexe/noxmic/MainActivity.java
     private TextView tvIp;
     private Button btnToggle;
     private Button btnSettings;
@@ -56,15 +56,10 @@ public class MainActivity extends AppCompatActivity {
     private SharedPreferences prefs;
     private int currentPort;
 
-=======
-    private android.widget.Button btnStart;
-    
->>>>>>> ea29ab1058c7419ded39239b1232073351dcdd4a:app/src/main/java/com/example/redmimic/MainActivity.java
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-<<<<<<< HEAD:app/src/main/java/com/devnexe/noxmic/MainActivity.java
 
         prefs = getSharedPreferences("NoxMicPrefs", MODE_PRIVATE);
         currentPort = prefs.getInt("server_port", 8080);
@@ -102,27 +97,6 @@ public class MainActivity extends AppCompatActivity {
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.RECORD_AUDIO}, REQUEST_RECORD_AUDIO_PERMISSION);
         }
-=======
-    
-        tvStatus = findViewById(R.id.tvStatus);
-        btnStart = findViewById(R.id.btnToggle);
-    
-        bufferSize = AudioRecord.getMinBufferSize(SAMPLE_RATE, CHANNEL_CONFIG, AUDIO_FORMAT);
-    
-        btnStart.setOnClickListener(v -> {
-            // Проверяем разрешения при нажатии
-            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
-                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.RECORD_AUDIO}, REQUEST_RECORD_AUDIO_PERMISSION);
-            } else {
-                // Если разрешения есть — запускаем
-                if (server == null || !server.isAlive()) {
-                    startAudioServer();
-                    btnStart.setText("Streaming Active");
-                    btnStart.setEnabled(false); // Чтобы не нажимали дважды
-                }
-            }
-        });
->>>>>>> ea29ab1058c7419ded39239b1232073351dcdd4a:app/src/main/java/com/example/redmimic/MainActivity.java
     }
 
     private void showSettingsDialog() {
@@ -185,32 +159,19 @@ public class MainActivity extends AppCompatActivity {
         public AudioServer(int port) { super(port); }
 
         @Override
-        public Response serve(IHTTPSession session) {
+        public Response handle(IHTTPSession session) {
             if (session.getUri().equals("/audio.wav")) {
-<<<<<<< HEAD:app/src/main/java/com/devnexe/noxmic/MainActivity.java
                 stopRecording();
-=======
-                stopRecording(); 
-                
->>>>>>> ea29ab1058c7419ded39239b1232073351dcdd4a:app/src/main/java/com/example/redmimic/MainActivity.java
                 try {
                     PipedInputStream inputStream = new PipedInputStream();
                     pipedOutputStream = new PipedOutputStream(inputStream);
                     startRecording();
-<<<<<<< HEAD:app/src/main/java/com/devnexe/noxmic/MainActivity.java
                     return Response.newChunkedResponse(Status.OK, "audio/wav", inputStream);
                 } catch (Exception e) {
                     return Response.newFixedLengthResponse(Status.INTERNAL_ERROR, NanoHTTPD.MIME_PLAINTEXT, e.getMessage());
-=======
-                    
-                    // В 2.3.1 используется этот метод для стриминга
-                    return newFixedLengthResponse(Status.OK, "audio/wav", inputStream, -1);
-                } catch (Exception e) {
-                    return newFixedLengthResponse(Status.INTERNAL_ERROR, NanoHTTPD.MIME_PLAINTEXT, "Error: " + e.getMessage());
->>>>>>> ea29ab1058c7419ded39239b1232073351dcdd4a:app/src/main/java/com/example/redmimic/MainActivity.java
                 }
             }
-            return newFixedLengthResponse(Status.NOT_FOUND, NanoHTTPD.MIME_PLAINTEXT, "Not Found");
+            return Response.newFixedLengthResponse(Status.NOT_FOUND, NanoHTTPD.MIME_PLAINTEXT, "Not Found");
         }
     }
 
