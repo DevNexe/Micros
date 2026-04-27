@@ -1,6 +1,13 @@
 <resources>
     <style name="Theme.NoxMic" parent="Theme.MaterialComponents.DayNight.NoActionBar">
-        </style>
+        <item name="colorPrimary">@color/bg_main</item>
+        <item name="colorPrimaryVariant">@color/bg_main</item> <item name="colorOnPrimary">@color/text_primary</item>
+
+        <item name="android:statusBarColor">@color/bg_main</item>
+        <item name="android:navigationBarColor">@color/bg_main</item>
+
+        <item name="android:windowLightStatusBar">false</item>
+    </style>
 
     <style name="NoxButtonStyle" parent="Widget.MaterialComponents.Button">
         <item name="android:layout_height">64dp</item> <item name="android:insetTop">0dp</item>
@@ -10,7 +17,7 @@
         <item name="android:padding">12dp</item>
         <item name="android:textAllCaps">true</item>
         <item name="android:textStyle">bold</item>
-        <item name="android:textSize">24sp</item>
+        <item name="android:textSize">16sp</item>
         <item name="android:letterSpacing">0.1</item>
     </style>
 </resources>
